@@ -37,6 +37,7 @@ static LOCAL: InitCell<RwLock<RoutingTable>> = InitCell::new();
 static INTERNET: InitCell<RwLock<ConnectionTable>> = InitCell::new();
 static LAN: InitCell<RwLock<ConnectionTable>> = InitCell::new();
 static BLE: InitCell<RwLock<ConnectionTable>> = InitCell::new();
+static IROH: InitCell<RwLock<ConnectionTable>> = InitCell::new();
 
 /// Connection entry for UserEntry
 struct NeighbourEntry {
@@ -102,6 +103,11 @@ impl ConnectionTable {
                 table: HashMap::new(),
             };
             LOCAL.set(RwLock::new(local));
+
+            let iroh = ConnectionTable {
+                table: HashMap::new(),
+            };
+            IROH.set(RwLock::new(iroh));
         }
 
         // create filled state for locally registered users
@@ -243,6 +249,7 @@ impl ConnectionTable {
             ConnectionModule::Ble => connection_table = BLE.get().write().unwrap(),
             ConnectionModule::Local => return,
             ConnectionModule::None => return,
+            ConnectionModule::Iroh => connection_table = IROH.get().write().unwrap(),
         }
 
         let now_ts = Timestamp::get_timestamp();
@@ -369,6 +376,7 @@ impl ConnectionTable {
             ConnectionModule::Ble => connection_table = BLE.get().write().unwrap(),
             ConnectionModule::Local => return table,
             ConnectionModule::None => return table,
+            ConnectionModule::Iroh => connection_table = IROH.get().write().unwrap(),
         }
 
         // iterate over connection table
@@ -545,6 +553,7 @@ impl ConnectionTable {
             ConnectionModule::Ble => connection_table = BLE.get().read().unwrap(),
             ConnectionModule::Local => return connections_list,
             ConnectionModule::None => return connections_list,
+            ConnectionModule::Iroh => connection_table = IROH.get().read().unwrap(),
         }
 
         // loop through all table entries per user

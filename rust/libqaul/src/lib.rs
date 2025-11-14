@@ -503,6 +503,9 @@ pub async fn start(storage_path: String, def_config: Option<BTreeMap<String, Str
                             }
                             ConnectionModule::Local => {}
                             ConnectionModule::None => {}
+                            ConnectionModule::Iroh => {
+                                log::warn!("TODO: implement sending messages to Iroh peers");
+                            }
                         }
                     }
                 }
@@ -538,6 +541,9 @@ pub async fn start(storage_path: String, def_config: Option<BTreeMap<String, Str
                             }
                             ConnectionModule::Local => {}
                             ConnectionModule::None => {}
+                            ConnectionModule::Iroh => {
+                                log::warn!("TODO: implement sending messages to Iroh peers");
+                            }
                         }
                     }
                 }
@@ -574,6 +580,9 @@ pub async fn start(storage_path: String, def_config: Option<BTreeMap<String, Str
                             }
                             ConnectionModule::Local => {}
                             ConnectionModule::None => {}
+                            ConnectionModule::Iroh => {
+                                log::warn!("TODO: implement sending messages to Iroh peers");
+                            }
                         }
                     }
                 }
@@ -610,6 +619,9 @@ pub async fn start(storage_path: String, def_config: Option<BTreeMap<String, Str
                             }
                             ConnectionModule::Local => {}
                             ConnectionModule::None => {}
+                            ConnectionModule::Iroh => {
+                                log::warn!("TODO: implement sending messages to Iroh peers");
+                            }
                         }
                     }
                 }
@@ -643,6 +655,9 @@ pub async fn start(storage_path: String, def_config: Option<BTreeMap<String, Str
                             }
                             ConnectionModule::Local => {}
                             ConnectionModule::None => {}
+                            ConnectionModule::Iroh => {
+                                log::warn!("TODO: implement sending messages to Iroh peers");
+                            }
                         }
                     }
                 }
@@ -696,6 +711,9 @@ pub async fn start(storage_path: String, def_config: Option<BTreeMap<String, Str
                             ConnectionModule::None => {
                                 // TODO: DTN behaviour
                                 // reschedule it for the moment
+                            }
+                            ConnectionModule::Iroh => {
+                                log::warn!("TODO: implement sending messages to Iroh peers");
                             }
                         }
                     }

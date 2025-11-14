@@ -124,6 +124,8 @@ impl VersionUpgrade {
                 maintain_period_limit: old_cfg.routing.maintain_period_limit,
             };
 
+            let iroh = crate::storage::configuration::Iroh::default();
+
             // create new configuration structure
             let new_config = crate::storage::configuration::Configuration {
                 node,
@@ -132,6 +134,7 @@ impl VersionUpgrade {
                 user_accounts,
                 debug,
                 routing,
+                iroh,
             };
 
             // save new configuration to file
