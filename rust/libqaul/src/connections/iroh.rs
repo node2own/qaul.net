@@ -27,6 +27,7 @@ use libp2p::{
     swarm::{NetworkBehaviour, Swarm},
     tcp, yamux, Multiaddr, PeerId, SwarmBuilder,
 };
+use libp2p_iroh::{Transport, TransportTrait};
 use prost::Message;
 use state::InitCell;
 use std::time::Duration;
@@ -246,6 +247,11 @@ impl Iroh {
         };
         behaviour.floodsub.subscribe(Node::get_topic());
 
+        let transport = Transport::new(Some(node_keys))
+            .await
+            .expect("transport")
+            .boxed();
+
         let mut swarm = SwarmBuilder::with_existing_identity(node_keys.to_owned())
             .with_async_std()
             .with_tcp(
@@ -254,7 +260,8 @@ impl Iroh {
                 yamux::Config::default,
             )
             .unwrap()
-            .with_quic()
+            .with_other_transport(|_| transport)
+            .unwrap()
             .with_behaviour(|key| {
                 log::trace!("internal IROH node ID: {:?}", key.public().to_peer_id());
                 Ok(behaviour)
