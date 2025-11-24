@@ -25,6 +25,8 @@ static INTERNET: InitCell<RwLock<Neighbours>> = InitCell::new();
 static LAN: InitCell<RwLock<Neighbours>> = InitCell::new();
 /// mutable state of BLE neighbour node table
 static BLE: InitCell<RwLock<Neighbours>> = InitCell::new();
+/// mutable state of Iroh neighbour node table
+static IROH: InitCell<RwLock<Neighbours>> = InitCell::new();
 
 /// Data base table of all ever discovered neighbour nodes
 ///
@@ -100,6 +102,7 @@ impl Neighbours {
             ConnectionModule::Ble => neighbours = BLE.get().write().unwrap(),
             ConnectionModule::Local => return,
             ConnectionModule::None => return,
+            ConnectionModule::Iroh => neighbours = IROH.get().write().unwrap(),
         }
 
         // get node from table
@@ -154,6 +157,7 @@ impl Neighbours {
             ConnectionModule::Ble => neighbours = BLE.get().write().unwrap(),
             ConnectionModule::Local => return,
             ConnectionModule::None => return,
+            ConnectionModule::Iroh => neighbours = IROH.get().write().unwrap(),
         }
 
         // delete entry
@@ -182,6 +186,7 @@ impl Neighbours {
             ConnectionModule::Ble => neighbours = BLE.get().read().unwrap(),
             ConnectionModule::Local => return Some(0),
             ConnectionModule::None => return None,
+            ConnectionModule::Iroh => neighbours = IROH.get().read().unwrap(),
         }
 
         // search for neighbour

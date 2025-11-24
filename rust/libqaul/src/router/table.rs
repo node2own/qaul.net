@@ -133,7 +133,7 @@ impl RoutingTable {
         table
     }
 
-    /// get online users and hope count    
+    /// get online users and hope count
     pub fn get_online_users() -> BTreeMap<Vec<u8>, u8> {
         let mut user_ids: BTreeMap<Vec<u8>, u8> = BTreeMap::new();
 
@@ -149,7 +149,7 @@ impl RoutingTable {
         user_ids
     }
 
-    /// get online users and hope count    
+    /// get online users and hope count
     pub fn get_online_users_info() -> BTreeMap<Vec<u8>, Vec<RoutingConnectionEntry>> {
         let mut users: BTreeMap<Vec<u8>, Vec<RoutingConnectionEntry>> = BTreeMap::new();
 
@@ -318,9 +318,10 @@ impl RoutingTable {
         match connection.module {
             ConnectionModule::None => return 0,
             ConnectionModule::Ble => return 1,
-            ConnectionModule::Internet => return 2,
-            ConnectionModule::Lan => return 3,
-            ConnectionModule::Local => return 4,
+            ConnectionModule::Iroh => return 2,
+            ConnectionModule::Internet => return 3,
+            ConnectionModule::Lan => return 4,
+            ConnectionModule::Local => return 5,
         }
     }
 }

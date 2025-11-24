@@ -127,6 +127,21 @@ impl Default for Internet {
     }
 }
 
+#[derive(Debug, Deserialize, Clone, Serialize)]
+pub struct IrohPeer {
+    pub public_key: String,
+    pub name: String,
+    pub enabled: bool,
+}
+
+/// Internet Overlay Connection Module
+#[derive(Debug, Deserialize, Clone, Serialize, Default)]
+pub struct Iroh {
+    pub active: bool,
+    pub peers: Vec<IrohPeer>,
+    pub do_listen: bool,
+}
+
 /// local user accounts that are stored on this node
 #[derive(Debug, Deserialize, Clone, Serialize)]
 pub struct UserAccount {
@@ -222,6 +237,7 @@ pub struct Configuration {
     pub node: Node,
     pub lan: Lan,
     pub internet: Internet,
+    pub iroh: Iroh,
     pub user_accounts: Vec<UserAccount>,
     pub debug: DebugOption,
     pub routing: RoutingOptions,
@@ -233,6 +249,7 @@ impl Default for Configuration {
             node: Node::default(),
             lan: Lan::default(),
             internet: Internet::default(),
+            iroh: Iroh::default(),
             user_accounts: Vec::new(),
             debug: DebugOption::default(),
             routing: RoutingOptions::default(),
