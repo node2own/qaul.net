@@ -25,7 +25,7 @@ mod services;
 pub mod storage;
 pub mod utilities;
 
-use connections::{ble::Ble, internet::Internet, ConnectionModule, Connections};
+use connections::{ble::Ble, internet::Internet, iroh::Iroh, ConnectionModule, Connections};
 use node::Node;
 use router::{
     feed_requester, flooder, info::RouterInfo, neighbours::Neighbours, user_requester, Router,
@@ -52,6 +52,8 @@ extern crate log;
 extern crate android_logger;
 #[cfg(target_os = "android")]
 use android_logger::Config;
+
+use crate::connections::iroh;
 
 /// Get default config values
 pub fn get_default_config(pattern: &str) -> Option<String> {
@@ -234,6 +236,7 @@ pub async fn start(storage_path: String, def_config: Option<BTreeMap<String, Str
     let conn = Connections::init().await;
     let mut internet = conn.internet.unwrap();
     let mut lan = conn.lan.unwrap();
+    let mut iroh = conn.iroh.unwrap();
 
     // initialize services
     Services::init();
@@ -289,6 +292,7 @@ pub async fn start(storage_path: String, def_config: Option<BTreeMap<String, Str
         let evt = {
             let lan_fut = lan.swarm.next().fuse();
             let internet_fut = internet.swarm.next().fuse();
+            let iroh_fut = iroh.swarm.next().fuse();
             let rpc_fut = rpc_ticker.next().fuse();
             let sys_fut = sys_ticker.next().fuse();
             let flooding_fut = flooding_ticker.next().fuse();
@@ -307,6 +311,7 @@ pub async fn start(storage_path: String, def_config: Option<BTreeMap<String, Str
             pin_mut!(
                 lan_fut,
                 internet_fut,
+                iroh_fut,
                 rpc_fut,
                 sys_fut,
                 flooding_fut,
@@ -402,6 +407,68 @@ pub async fn start(storage_path: String, def_config: Option<BTreeMap<String, Str
                         // }
                         libp2p::swarm::SwarmEvent::Behaviour(behaviour) => {
                             internet.swarm.behaviour_mut().process_events(behaviour);
+                        }
+                        _ => {}
+                    }
+                    None
+                },
+                iroh_event = iroh_fut => {
+                    //log::trace!("Unhandled internet connection module event: {:?}", internet_event);
+                    match iroh_event.unwrap() {
+                        libp2p::swarm::SwarmEvent::OutgoingConnectionError{error, ..} => {
+                            // Get list of addresses which we failed to connect to
+                            // Since `UnknownPeerUnreachableAddr` error was removed, we need to parse
+                            // list of outgoing connection errors to get list of addresses
+                            match error {
+                                libp2p::swarm::DialError::Transport(unreachable_addrs) => {
+                                    for (addr, _) in unreachable_addrs {
+
+                                        // check if address is active
+                                        if Iroh::is_active_connection(&addr){
+                                            Iroh::add_reconnection(addr);
+                                        }
+
+                                    }
+                                },
+                                _ => {
+                                    log::trace!("INTERNET Outgoing Connection Error");
+                                }
+                            }
+                        }
+                        libp2p::swarm::SwarmEvent::ConnectionEstablished{peer_id, endpoint, ..} => {
+                            // remove from attempting connections
+                            match endpoint{
+                                libp2p::core::ConnectedPoint::Dialer{address, ..} =>{
+                                    log::info!("connection established! peer={}, endpoint={}", peer_id.to_base58(), address.to_string());
+                                    Iroh::remove_reconnection(address.clone());
+                                    Iroh::add_connection(address.to_string(), &peer_id);
+                                }
+                                _ => {}
+                            }
+                        }
+                        libp2p::swarm::SwarmEvent::ConnectionClosed{peer_id, endpoint, ..} => {
+                            // remove from neighbour table, after then scheduler will auto remove this neighbour
+                            log::trace!("internet connection closed: {:?}", peer_id);
+                            Neighbours::delete(ConnectionModule::Iroh, peer_id);
+
+                            // add new reconnection
+                            match endpoint {
+                                libp2p::core::ConnectedPoint::Dialer{address, ..} =>{
+                                    //check if address is active
+                                    if Iroh::is_active_connection(&address){
+                                        Iroh::add_reconnection(address);
+                                    }
+                                }
+                                _ => {}
+                            }
+                        }
+                        // libp2p::swarm::SwarmEvent::BannedPeer {peer_id, ..} => {
+                        //     // remove from neighbour table, after then scheduler will auto remove this neighbour
+                        //     log::trace!("internet connection banned: {:?}", peer_id);
+                        //     Neighbours::delete(ConnectionModule::Iroh, peer_id);
+                        // }
+                        libp2p::swarm::SwarmEvent::Behaviour(behaviour) => {
+                            iroh.swarm.behaviour_mut().process_events(behaviour);
                         }
                         _ => {}
                     }
@@ -666,6 +733,11 @@ pub async fn start(storage_path: String, def_config: Option<BTreeMap<String, Str
                         log::trace!("redial....: {:?}", addr);
                         Internet::peer_redial(&addr, &mut internet.swarm).await;
                         Internet::set_redialed(&addr);
+                    }
+                    if let Some(addr) = Iroh::check_reconnection() {
+                        log::trace!("redial iroh connection....: {:?}", addr);
+                        Iroh::peer_redial(&addr, &mut iroh.swarm).await;
+                        Iroh::set_redialed(&addr);
                     }
                 }
                 EventType::RoutingTable => {
