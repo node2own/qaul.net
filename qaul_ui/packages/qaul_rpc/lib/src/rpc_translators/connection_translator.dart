@@ -11,11 +11,11 @@ class ConnectionTranslator extends RpcModuleTranslator {
   ) async {
     final message = Connections.fromBuffer(data);
     switch (message.whichMessage()) {
-      case Connections_Message.internetNodesList:
+      case Connections_Message.meshNodesList:
         final nodes = message
-            .ensureInternetNodesList()
+            .ensureMeshNodesList()
             .nodes
-            .map(InternetNode.fromRpcInternetNodesEntry)
+            .map(MeshNode.fromRpcMeshNodesEntry)
             .toList();
         return RpcTranslatorResponse(type, nodes);
       default:
@@ -25,7 +25,7 @@ class ConnectionTranslator extends RpcModuleTranslator {
 
   @override
   Future<void> processResponse(RpcTranslatorResponse res, Ref ref) async {
-    if (res.module != type || res.data is! List<InternetNode>) return;
+    if (res.module != type || res.data is! List<MeshNode>) return;
     ref.read(connectedNodesProvider.notifier).state = res.data;
   }
 }

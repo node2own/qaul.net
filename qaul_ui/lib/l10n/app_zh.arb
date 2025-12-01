@@ -70,7 +70,7 @@
   "groupStateEventClosed": "该群组已被关闭",
   "groupStateEventCreated": "已成功创建群组",
   "hopCount": "跳数",
-  "internetNodes": "网络节点",
+  "meshNodes": "网络节点",
   "invalidIPMessage": "无效的IP地址",
   "invalidPortMessage": "无效的端口",
   "invite": "邀请",

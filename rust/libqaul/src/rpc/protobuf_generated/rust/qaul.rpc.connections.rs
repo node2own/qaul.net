@@ -9,36 +9,36 @@ pub struct Connections {
 pub mod connections {
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum Message {
-        /// Request a list of all internet nodes.
-        /// libqaul returns an internet_nodes_list message.
+        /// Request a list of all mesh nodes.
+        /// libqaul returns an mesh_nodes_list message.
         #[prost(message, tag = "1")]
-        InternetNodesRequest(super::InternetNodesRequest),
-        /// returns a list of all internet nodes and
+        MeshNodesRequest(super::MeshNodesRequest),
+        /// returns a list of all mesh nodes and
         /// an information about why this message has been sent.
         #[prost(message, tag = "2")]
-        InternetNodesList(super::InternetNodesList),
-        /// Add a new internet node address.
-        /// libqaul returns an internet_nodes_list message.
+        MeshNodesList(super::MeshNodesList),
+        /// Add a new mesh node address.
+        /// libqaul returns an mesh_nodes_list message.
         #[prost(message, tag = "3")]
-        InternetNodesAdd(super::InternetNodesEntry),
-        /// Remove an internet node address.
-        /// libqaul returns an internet_nodes_list message.
+        MeshNodesAdd(super::MeshNodesEntry),
+        /// Remove an mesh node address.
+        /// libqaul returns an mesh_nodes_list message.
         #[prost(message, tag = "4")]
-        InternetNodesRemove(super::InternetNodesEntry),
-        /// Update an internet node state.
-        /// libqaul returns an internet_nodes_list message.
+        MeshNodesRemove(super::MeshNodesEntry),
+        /// Update an mesh node state.
+        /// libqaul returns an mesh_nodes_list message.
         #[prost(message, tag = "5")]
-        InternetNodesState(super::InternetNodesEntry),
-        /// Rename internet node.
-        /// libqaul returns an internet_nodes_list message.
+        MeshNodesState(super::MeshNodesEntry),
+        /// Rename mesh node.
+        /// libqaul returns an mesh_nodes_list message.
         #[prost(message, tag = "6")]
-        InternetNodesRename(super::InternetNodesEntry),
+        MeshNodesRename(super::MeshNodesEntry),
     }
 }
-/// UI request for Internet nodes list
+/// UI request for mesh nodes list
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
-pub struct InternetNodesRequest {}
-/// Internet Nodes List
+pub struct MeshNodesRequest {}
+/// Mesh Nodes List
 ///
 /// This is a list of all peer nodes the internet
 /// connections module tries to connect to.
@@ -46,7 +46,7 @@ pub struct InternetNodesRequest {}
 /// This message is returned after a request, or when
 /// adding or removing a node address.
 #[derive(Clone, PartialEq, ::prost::Message)]
-pub struct InternetNodesList {
+pub struct MeshNodesList {
     /// Information about why this message is sent
     /// and the result of the request, adding or removing
     /// of nodes.
@@ -55,14 +55,14 @@ pub struct InternetNodesList {
     /// list of all node multiaddresses that
     /// the internet module will try to connect to.
     #[prost(message, repeated, tag = "2")]
-    pub nodes: ::prost::alloc::vec::Vec<InternetNodesEntry>,
+    pub nodes: ::prost::alloc::vec::Vec<MeshNodesEntry>,
 }
-/// Internet Nodes Entry
+/// Mesh Nodes Entry
 ///
 /// Contains a node address as a libp2p multiaddress.
 /// e.g. "/ip4/144.91.74.192/udp/9229/quic-v1"
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
-pub struct InternetNodesEntry {
+pub struct MeshNodesEntry {
     /// address
     #[prost(string, tag = "1")]
     pub address: ::prost::alloc::string::String,
@@ -78,9 +78,9 @@ pub struct InternetNodesEntry {
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
 #[repr(i32)]
 pub enum Info {
-    /// Internet Nodes Request
+    /// Mesh Nodes Request
     /// By default, this message is sent due to an
-    /// internet nodes request message.
+    /// mesh nodes request message.
     Request = 0,
     /// Add Internet Node
     /// Successfully added an address

@@ -132,13 +132,13 @@ class LibqaulWorker {
   // CONNECTIONS Requests
   // -------------------
   Future<void> requestNodes() async => await _sendMessage(Modules.CONNECTIONS,
-      Connections(internetNodesRequest: InternetNodesRequest()));
+      Connections(meshNodesRequest: MeshNodesRequest()));
 
   Future<void> addNode(String address, [String? name]) async =>
       await _sendMessage(
           Modules.CONNECTIONS,
           Connections(
-            internetNodesAdd: InternetNodesEntry(
+            meshNodesAdd: MeshNodesEntry(
               address: address,
               enabled: true,
               name: name,
@@ -147,18 +147,18 @@ class LibqaulWorker {
 
   Future<void> removeNode(String address) async => await _sendMessage(
       Modules.CONNECTIONS,
-      Connections(internetNodesRemove: InternetNodesEntry(address: address)));
+      Connections(meshNodesRemove: MeshNodesEntry(address: address)));
 
   void setNodeState(String address, {bool active = true}) async {
     var msg = Connections(
-      internetNodesState: InternetNodesEntry(address: address, enabled: active),
+      meshNodesState: MeshNodesEntry(address: address, enabled: active),
     );
     _sendMessage(Modules.CONNECTIONS, msg);
   }
 
   void renameNode(String address, {required String name}) {
     var msg = Connections(
-      internetNodesRename: InternetNodesEntry(address: address, name: name),
+      meshNodesRename: MeshNodesEntry(address: address, name: name),
     );
     _sendMessage(Modules.CONNECTIONS, msg);
   }

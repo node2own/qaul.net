@@ -67,7 +67,7 @@
   "groupStateEventClosed": "گروه بسته شده است",
   "groupStateEventCreated": "گروه ایجاد شده است",
   "hopCount": "تعداد Hop ها",
-  "internetNodes": "گره های اینترنتی",
+  "meshNodes": "گره های اینترنتی",
   "invalidIPMessage": "آی پی نامعتبر",
   "invalidPortMessage": "پورت نامعتبر",
   "invite": "دعوت",

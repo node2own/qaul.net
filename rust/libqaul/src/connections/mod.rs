@@ -108,12 +108,10 @@ impl Connections {
         match proto::Connections::decode(&data[..]) {
             Ok(connections) => {
                 match connections.message {
-                    Some(proto::connections::Message::InternetNodesRequest(
-                        _internet_nodes_request,
-                    )) => {
+                    Some(proto::connections::Message::MeshNodesRequest(_mesh_nodes_request)) => {
                         Self::rpc_send_node_list(proto::Info::Request);
                     }
-                    Some(proto::connections::Message::InternetNodesAdd(nodes_entry)) => {
+                    Some(proto::connections::Message::MeshNodesAdd(nodes_entry)) => {
                         // check if we have a valid address
                         let mut valid = false;
                         let mut info = proto::Info::AddSuccess;
@@ -166,7 +164,7 @@ impl Connections {
                         Self::rpc_send_node_list(info);
                     }
 
-                    Some(proto::connections::Message::InternetNodesRename(nodes_entry)) => {
+                    Some(proto::connections::Message::MeshNodesRename(nodes_entry)) => {
                         let mut info = proto::Info::RemoveErrorNotFound;
                         {
                             let mut nodes: Vec<InternetPeer> = Vec::new();
@@ -203,7 +201,7 @@ impl Connections {
                         Self::rpc_send_node_list(info);
                     }
 
-                    Some(proto::connections::Message::InternetNodesRemove(nodes_entry)) => {
+                    Some(proto::connections::Message::MeshNodesRemove(nodes_entry)) => {
                         let mut info = proto::Info::RemoveErrorNotFound;
 
                         {
@@ -244,7 +242,7 @@ impl Connections {
                         // send response
                         Self::rpc_send_node_list(info);
                     }
-                    Some(proto::connections::Message::InternetNodesState(nodes_entry)) => {
+                    Some(proto::connections::Message::MeshNodesState(nodes_entry)) => {
                         let mut info = proto::Info::RemoveErrorNotFound;
                         let mut changed_state = false;
 
@@ -326,14 +324,14 @@ impl Connections {
 
     /// create and send a node list message
     fn rpc_send_node_list(info: proto::Info) {
-        let mut nodes: Vec<proto::InternetNodesEntry> = Vec::new();
+        let mut nodes: Vec<proto::MeshNodesEntry> = Vec::new();
 
         // get list of peer nodes from config
         let config = Configuration::get();
 
         // fill all the nodes
         for peer in &config.internet.peers {
-            nodes.push(proto::InternetNodesEntry {
+            nodes.push(proto::MeshNodesEntry {
                 address: peer.address.clone(),
                 name: peer.name.clone(),
                 enabled: peer.enabled,
@@ -342,8 +340,8 @@ impl Connections {
 
         // create the protobuf message
         let proto_message = proto::Connections {
-            message: Some(proto::connections::Message::InternetNodesList(
-                proto::InternetNodesList {
+            message: Some(proto::connections::Message::MeshNodesList(
+                proto::MeshNodesList {
                     info: info as i32,
                     nodes,
                 },

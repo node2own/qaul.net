@@ -68,7 +68,7 @@
   "groupStateEventClosed": "تم إغلاق المجموعة",
   "groupStateEventCreated": "تم إنشاء المجموعة",
   "hopCount": "عدد القفزات",
-  "internetNodes": "عقدة إنترنت",
+  "meshNodes": "عقدة إنترنت",
   "invalidIPMessage": "IP معتل",
   "invalidPortMessage": "منفذ معتل",
   "invite": "يدعو",

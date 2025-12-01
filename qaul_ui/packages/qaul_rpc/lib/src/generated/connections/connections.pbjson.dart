@@ -36,12 +36,12 @@ final $typed_data.Uint8List infoDescriptor = $convert.base64Decode(
 const Connections$json = {
   '1': 'Connections',
   '2': [
-    {'1': 'internet_nodes_request', '3': 1, '4': 1, '5': 11, '6': '.qaul.rpc.connections.InternetNodesRequest', '9': 0, '10': 'internetNodesRequest'},
-    {'1': 'internet_nodes_list', '3': 2, '4': 1, '5': 11, '6': '.qaul.rpc.connections.InternetNodesList', '9': 0, '10': 'internetNodesList'},
-    {'1': 'internet_nodes_add', '3': 3, '4': 1, '5': 11, '6': '.qaul.rpc.connections.InternetNodesEntry', '9': 0, '10': 'internetNodesAdd'},
-    {'1': 'internet_nodes_remove', '3': 4, '4': 1, '5': 11, '6': '.qaul.rpc.connections.InternetNodesEntry', '9': 0, '10': 'internetNodesRemove'},
-    {'1': 'internet_nodes_state', '3': 5, '4': 1, '5': 11, '6': '.qaul.rpc.connections.InternetNodesEntry', '9': 0, '10': 'internetNodesState'},
-    {'1': 'internet_nodes_rename', '3': 6, '4': 1, '5': 11, '6': '.qaul.rpc.connections.InternetNodesEntry', '9': 0, '10': 'internetNodesRename'},
+    {'1': 'mesh_nodes_request', '3': 1, '4': 1, '5': 11, '6': '.qaul.rpc.connections.MeshNodesRequest', '9': 0, '10': 'meshNodesRequest'},
+    {'1': 'mesh_nodes_list', '3': 2, '4': 1, '5': 11, '6': '.qaul.rpc.connections.MeshNodesList', '9': 0, '10': 'meshNodesList'},
+    {'1': 'mesh_nodes_add', '3': 3, '4': 1, '5': 11, '6': '.qaul.rpc.connections.MeshNodesEntry', '9': 0, '10': 'meshNodesAdd'},
+    {'1': 'mesh_nodes_remove', '3': 4, '4': 1, '5': 11, '6': '.qaul.rpc.connections.MeshNodesEntry', '9': 0, '10': 'meshNodesRemove'},
+    {'1': 'mesh_nodes_state', '3': 5, '4': 1, '5': 11, '6': '.qaul.rpc.connections.MeshNodesEntry', '9': 0, '10': 'meshNodesState'},
+    {'1': 'mesh_nodes_rename', '3': 6, '4': 1, '5': 11, '6': '.qaul.rpc.connections.MeshNodesEntry', '9': 0, '10': 'meshNodesRename'},
   ],
   '8': [
     {'1': 'message'},
@@ -62,33 +62,33 @@ final $typed_data.Uint8List connectionsDescriptor = $convert.base64Decode(
     'Rlc19yZW5hbWUYBiABKAsyKC5xYXVsLnJwYy5jb25uZWN0aW9ucy5JbnRlcm5ldE5vZGVzRW50'
     'cnlIAFITaW50ZXJuZXROb2Rlc1JlbmFtZUIJCgdtZXNzYWdl');
 
-@$core.Deprecated('Use internetNodesRequestDescriptor instead')
-const InternetNodesRequest$json = {
-  '1': 'InternetNodesRequest',
+@$core.Deprecated('Use meshNodesRequestDescriptor instead')
+const MeshNodesRequest$json = {
+  '1': 'MeshNodesRequest',
 };
 
-/// Descriptor for `InternetNodesRequest`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List internetNodesRequestDescriptor = $convert.base64Decode(
+/// Descriptor for `MeshNodesRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List meshNodesRequestDescriptor = $convert.base64Decode(
     'ChRJbnRlcm5ldE5vZGVzUmVxdWVzdA==');
 
-@$core.Deprecated('Use internetNodesListDescriptor instead')
-const InternetNodesList$json = {
-  '1': 'InternetNodesList',
+@$core.Deprecated('Use meshNodesListDescriptor instead')
+const MeshNodesList$json = {
+  '1': 'MeshNodesList',
   '2': [
     {'1': 'info', '3': 1, '4': 1, '5': 14, '6': '.qaul.rpc.connections.Info', '10': 'info'},
-    {'1': 'nodes', '3': 2, '4': 3, '5': 11, '6': '.qaul.rpc.connections.InternetNodesEntry', '10': 'nodes'},
+    {'1': 'nodes', '3': 2, '4': 3, '5': 11, '6': '.qaul.rpc.connections.MeshNodesEntry', '10': 'nodes'},
   ],
 };
 
-/// Descriptor for `InternetNodesList`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List internetNodesListDescriptor = $convert.base64Decode(
+/// Descriptor for `MeshNodesList`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List meshNodesListDescriptor = $convert.base64Decode(
     'ChFJbnRlcm5ldE5vZGVzTGlzdBIuCgRpbmZvGAEgASgOMhoucWF1bC5ycGMuY29ubmVjdGlvbn'
     'MuSW5mb1IEaW5mbxI+CgVub2RlcxgCIAMoCzIoLnFhdWwucnBjLmNvbm5lY3Rpb25zLkludGVy'
     'bmV0Tm9kZXNFbnRyeVIFbm9kZXM=');
 
-@$core.Deprecated('Use internetNodesEntryDescriptor instead')
-const InternetNodesEntry$json = {
-  '1': 'InternetNodesEntry',
+@$core.Deprecated('Use meshNodesEntryDescriptor instead')
+const MeshNodesEntry$json = {
+  '1': 'MeshNodesEntry',
   '2': [
     {'1': 'address', '3': 1, '4': 1, '5': 9, '10': 'address'},
     {'1': 'enabled', '3': 2, '4': 1, '5': 8, '10': 'enabled'},
@@ -96,8 +96,8 @@ const InternetNodesEntry$json = {
   ],
 };
 
-/// Descriptor for `InternetNodesEntry`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List internetNodesEntryDescriptor = $convert.base64Decode(
+/// Descriptor for `MeshNodesEntry`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List meshNodesEntryDescriptor = $convert.base64Decode(
     'ChJJbnRlcm5ldE5vZGVzRW50cnkSGAoHYWRkcmVzcxgBIAEoCVIHYWRkcmVzcxIYCgdlbmFibG'
     'VkGAIgASgIUgdlbmFibGVkEhIKBG5hbWUYAyABKAlSBG5hbWU=');
 

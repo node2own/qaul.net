@@ -70,7 +70,7 @@
   "groupStateEventClosed": "群已關閉",
   "groupStateEventCreated": "群組已創建",
   "hopCount": "跳數",
-  "internetNodes": "網路節點",
+  "meshNodes": "網路節點",
   "invalidIPMessage": "無效IP",
   "invalidPortMessage": "無效端口",
   "invite": "邀請",

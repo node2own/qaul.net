@@ -24,11 +24,11 @@ impl Connections {
     /// The CLI commands of users are processed here
     pub fn cli(command: &str) {
         match command {
-            // request list of all internet nodes
+            // request list of all mesh nodes
             cmd if cmd.starts_with("nodes list") => {
-                Self::internet_nodes_list();
+                Self::mesh_nodes_list();
             }
-            // add an internet node
+            // add an mesh node
             cmd if cmd.starts_with("nodes add ") => {
                 let args_str = cmd.strip_prefix("nodes add ").unwrap();
                 let mut iter = args_str.split_whitespace();
@@ -86,11 +86,11 @@ impl Connections {
     }
 
     /// send an rpc request for internet peering nodes list
-    fn internet_nodes_list() {
+    fn mesh_nodes_list() {
         // create request message
         let proto_message = proto::Connections {
-            message: Some(proto::connections::Message::InternetNodesRequest(
-                proto::InternetNodesRequest {},
+            message: Some(proto::connections::Message::MeshNodesRequest(
+                proto::MeshNodesRequest {},
             )),
         };
 
@@ -102,8 +102,8 @@ impl Connections {
     fn internet_node_add(address: String, name: String) {
         // create message
         let proto_message = proto::Connections {
-            message: Some(proto::connections::Message::InternetNodesAdd(
-                proto::InternetNodesEntry {
+            message: Some(proto::connections::Message::MeshNodesAdd(
+                proto::MeshNodesEntry {
                     address,
                     name,
                     enabled: true,
@@ -119,8 +119,8 @@ impl Connections {
     fn internet_node_rename(address: String, name: String) {
         // create message
         let proto_message = proto::Connections {
-            message: Some(proto::connections::Message::InternetNodesRename(
-                proto::InternetNodesEntry {
+            message: Some(proto::connections::Message::MeshNodesRename(
+                proto::MeshNodesEntry {
                     address,
                     name,
                     enabled: true,
@@ -138,8 +138,8 @@ impl Connections {
     fn internet_node_remove(address: String) {
         // create message
         let proto_message = proto::Connections {
-            message: Some(proto::connections::Message::InternetNodesRemove(
-                proto::InternetNodesEntry {
+            message: Some(proto::connections::Message::MeshNodesRemove(
+                proto::MeshNodesEntry {
                     address,
                     name: String::from(""),
                     enabled: false,
@@ -157,8 +157,8 @@ impl Connections {
     fn internet_node_activate(address: String) {
         // create message
         let proto_message = proto::Connections {
-            message: Some(proto::connections::Message::InternetNodesState(
-                proto::InternetNodesEntry {
+            message: Some(proto::connections::Message::MeshNodesState(
+                proto::MeshNodesEntry {
                     address,
                     name: String::from(""),
                     enabled: true,
@@ -175,8 +175,8 @@ impl Connections {
     fn internet_node_deactivate(address: String) {
         // create message
         let proto_message = proto::Connections {
-            message: Some(proto::connections::Message::InternetNodesState(
-                proto::InternetNodesEntry {
+            message: Some(proto::connections::Message::MeshNodesState(
+                proto::MeshNodesEntry {
                     address,
                     name: String::from(""),
                     enabled: false,
@@ -211,7 +211,7 @@ impl Connections {
         match proto::Connections::decode(&data[..]) {
             Ok(connections) => {
                 match connections.message {
-                    Some(proto::connections::Message::InternetNodesList(proto_list)) => {
+                    Some(proto::connections::Message::MeshNodesList(proto_list)) => {
                         let mut line = 1;
                         println!("");
 

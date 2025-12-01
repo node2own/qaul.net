@@ -66,7 +66,7 @@
   "groupStateEventClosed": "Групу закрито",
   "groupStateEventCreated": "Групу створено",
   "hopCount": "Стрибків",
-  "internetNodes": "Інтернет-вузли",
+  "meshNodes": "Інтернет-вузли",
   "invalidIPMessage": "Хибна IP-адреса",
   "invalidPortMessage": "Хибний порт",
   "invite": "Запросити",

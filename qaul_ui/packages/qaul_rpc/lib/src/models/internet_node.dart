@@ -3,10 +3,10 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../generated/connections/connections.pb.dart';
 
-final connectedNodesProvider = StateProvider<List<InternetNode>>((ref) => []);
+final connectedNodesProvider = StateProvider<List<MeshNode>>((ref) => []);
 
-class InternetNode extends Equatable {
-  InternetNode(
+class MeshNode extends Equatable {
+  MeshNode(
     this.address, {
     required this.isActive,
     required this.name,
@@ -45,8 +45,8 @@ class InternetNode extends Equatable {
   @override
   List<Object?> get props => [address];
 
-  factory InternetNode.fromRpcInternetNodesEntry(InternetNodesEntry entry) {
-    return InternetNode(
+  factory MeshNode.fromRpcMeshNodesEntry(MeshNodesEntry entry) {
+    return MeshNode(
       entry.address,
       isActive: entry.enabled,
       name: entry.name,

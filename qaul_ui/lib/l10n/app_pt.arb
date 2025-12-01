@@ -72,7 +72,7 @@
   "groupStateEventClosed": "O grupo foi fechado",
   "groupStateEventCreated": "O grupo foi criado",
   "hopCount": "Número de Saltos",
-  "internetNodes": "Pontos de Conexão",
+  "meshNodes": "Pontos de Conexão",
   "invalidIPMessage": "IP Inválido",
   "invalidPortMessage": "Porta Inválida",
   "invite": "Convidar",

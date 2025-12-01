@@ -27,7 +27,7 @@
     "theme": "Тема",
     "lightTheme": "Светлая тема",
     "darkTheme": "Темная тема",
-    "internetNodes": "Интернет-узлы",
+    "meshNodes": "Интернет-узлы",
     "address": "Адрес",
     "name": "Имя",
     "connections": "Соединения",

@@ -16,6 +16,10 @@ use std::path::Path;
 fn main() {
     let mut prost_build = prost_build::Config::new();
 
+    if let Ok(path) = std::env::var("PROTOC") {
+        prost_build.protoc_executable(path);
+    }
+
     // make chat messages serializable
     // in order to save them in the data base
     prost_build.type_attribute(

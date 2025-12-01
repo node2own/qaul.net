@@ -44,7 +44,7 @@ class SettingsScreen extends HookConsumerWidget {
             icon: const FaIcon(FontAwesomeIcons.networkWired),
             content: const Padding(
               padding: EdgeInsets.only(top: 20),
-              child: _InternetNodesList(),
+              child: _MeshNodesList(),
             ),
           ),
           if (Platform.isAndroid) ...[
@@ -136,8 +136,8 @@ class _NotificationOptionsState extends State<_NotificationOptions> {
   }
 }
 
-class _InternetNodesList extends HookConsumerWidget {
-  const _InternetNodesList();
+class _MeshNodesList extends HookConsumerWidget {
+  const _MeshNodesList();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -172,7 +172,7 @@ class _InternetNodesList extends HookConsumerWidget {
         children: [
           QaulTable(
             titleIcon: CupertinoIcons.globe,
-            title: l10n!.internetNodes,
+            title: l10n!.meshNodes,
             addRowLabel: l10n.addNodeCTA,
             rowCount: nodes.length,
             onAddRowPressed: () async {

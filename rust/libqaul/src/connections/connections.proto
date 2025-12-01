@@ -4,53 +4,53 @@ package qaul.rpc.connections;
 // Connections rpc message container
 message Connections {
     oneof message {
-        // Request a list of all internet nodes.
-        // libqaul returns an internet_nodes_list message.
-        InternetNodesRequest internet_nodes_request = 1;
-        // returns a list of all internet nodes and
+        // Request a list of all mesh nodes.
+        // libqaul returns an mesh_nodes_list message.
+        MeshNodesRequest mesh_nodes_request = 1;
+        // returns a list of all mesh nodes and
         // an information about why this message has been sent.
-        InternetNodesList internet_nodes_list = 2;
-        // Add a new internet node address.
-        // libqaul returns an internet_nodes_list message.
-        InternetNodesEntry internet_nodes_add = 3;
-        // Remove an internet node address.
-        // libqaul returns an internet_nodes_list message.
-        InternetNodesEntry internet_nodes_remove = 4;
-        // Update an internet node state.
-        // libqaul returns an internet_nodes_list message.
-        InternetNodesEntry internet_nodes_state = 5;
-        // Rename internet node.
-        // libqaul returns an internet_nodes_list message.
-        InternetNodesEntry internet_nodes_rename = 6;
+        MeshNodesList mesh_nodes_list = 2;
+        // Add a new mesh node address.
+        // libqaul returns an mesh_nodes_list message.
+        MeshNodesEntry mesh_nodes_add = 3;
+        // Remove an mesh node address.
+        // libqaul returns an mesh_nodes_list message.
+        MeshNodesEntry mesh_nodes_remove = 4;
+        // Update an mesh node state.
+        // libqaul returns an mesh_nodes_list message.
+        MeshNodesEntry mesh_nodes_state = 5;
+        // Rename mesh node.
+        // libqaul returns an mesh_nodes_list message.
+        MeshNodesEntry mesh_nodes_rename = 6;
     }
 }
 
-// UI request for Internet nodes list
-message InternetNodesRequest {}
+// UI request for mesh nodes list
+message MeshNodesRequest {}
 
-// Internet Nodes List
+// Mesh Nodes List
 //
 // This is a list of all peer nodes the internet
 // connections module tries to connect to.
 //
 // This message is returned after a request, or when
 // adding or removing a node address.
-message InternetNodesList {
+message MeshNodesList {
     // Information about why this message is sent
     // and the result of the request, adding or removing
     // of nodes.
     Info info = 1;
     // list of all node multiaddresses that
     // the internet module will try to connect to.
-    repeated InternetNodesEntry nodes = 2;
+    repeated MeshNodesEntry nodes = 2;
 }
 
 // Information about the system actions that led to
 // the creation of this message.
 enum Info {
-    // Internet Nodes Request
+    // Mesh Nodes Request
     // By default, this message is sent due to an
-    // internet nodes request message.
+    // mesh nodes request message.
     REQUEST = 0;
     // Add Internet Node
     // Successfully added an address
@@ -66,11 +66,11 @@ enum Info {
     REMOVE_ERROR_NOT_FOUND = 7;
 }
 
-// Internet Nodes Entry
+// Mesh Nodes Entry
 //
 // Contains a node address as a libp2p multiaddress.
 // e.g. "/ip4/144.91.74.192/udp/9229/quic-v1"
-message InternetNodesEntry {
+message MeshNodesEntry {
     // address
     string address = 1;
     // enabled
